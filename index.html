@@ -4,8 +4,2594 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>JSFiddle 3obcyqna</title>
+
+  <style>
+    
+/* ==========================================================
+   GALAVIA RD · site.css
+   Tema oscuro: índigo, violeta, azul y cian.
+   ========================================================== */
+
+:root {
+  --fondo: #070618;
+  --superficie: #110f36;
+  --superficie-2: #181548;
+  --linea: #2c2878;
+  --linea-viva: #4b43c9;
+  --violeta: #8b5cf6;
+  --violeta-fuerte: #7c3aed;
+  --azul: #4f8cff;
+  --azul-fuerte: #2563eb;
+  --cian: #22d3ee;
+  --verde: #34d399;
+  --aviso: #f472b6;
+  --texto: #eeedff;
+  --texto-suave: #b9b5e8;
+  --texto-tenue: #8e89c8;
+  --via: linear-gradient(100deg, #8b5cf6, #4f8cff 55%, #22d3ee);
+  --boton: linear-gradient(100deg, #7c3aed, #2563eb);
+  --f-titulos: "Chakra Petch", "Segoe UI", "Trebuchet MS", Arial, sans-serif;
+  --f-texto: "Figtree", "Segoe UI", Arial, sans-serif;
+  --ancho: 72rem;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; }
+
+body {
+  margin: 0;
+  padding-block: 0 3rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background-color: var(--fondo);
+  background-image:
+    radial-gradient(70rem 36rem at 92% -8%, rgba(124, 58, 237, 0.30), transparent 70%),
+    radial-gradient(60rem 32rem at -10% 14%, rgba(37, 99, 235, 0.20), transparent 70%);
+  background-repeat: no-repeat;
+  color: var(--texto);
+  font: 400 1rem/1.65 var(--f-texto);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 60;
+  background: var(--fondo);
+}
+
+body.menu-abierto { overflow: hidden; }
+img { max-width: 100%; }
+a { color: var(--cian); }
+h1, h2, h3 { font-family: var(--f-titulos); text-wrap: balance; }
+
+:focus-visible {
+  outline: 2px solid var(--cian);
+  outline-offset: 3px;
+}
+
+.saltar {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 120;
+  padding: 0.6rem 1rem;
+  font: 600 0.95rem var(--f-texto);
+  color: #fff;
+  background: var(--azul-fuerte);
+  border: 0;
+  border-radius: 4px;
+}
+.saltar:focus { top: 0.5rem; }
+
+/* Barra superior */
+.barra {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: var(--ancho);
+  margin-inline: auto;
+  padding-block: 0.6rem;
+  background: rgba(7, 6, 24, 0.84);
+  backdrop-filter: blur(10px);
+}
+
+.menu-boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.2rem 1rem 0.2rem 0.2rem;
+  color: var(--texto);
+  background: var(--superficie);
+  border: 1px solid var(--linea-viva);
+  border-radius: 999px;
+  font: 600 0.95rem/1 var(--f-titulos);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.menu-boton img { display: block; width: 2.75rem; height: 2.75rem; }
+.menu-boton:hover {
+  border-color: var(--cian);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.35);
+}
+
+.marca {
+  font: 700 1.15rem/1 var(--f-titulos);
+  letter-spacing: 0.1em;
+  color: var(--texto);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.marca b { color: var(--cian); font-weight: 700; }
+
+.barra-cta {
+  margin-left: auto;
+  padding: 0.65rem 1rem;
+  font: 600 0.9rem/1 var(--f-titulos);
+  color: var(--texto);
+  text-decoration: none;
+  border: 1px solid var(--linea-viva);
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s;
+}
+.barra-cta:hover {
+  background: rgba(124, 58, 237, 0.25);
+  border-color: var(--violeta);
+}
+
+/* Vistas */
+main {
+  max-width: var(--ancho);
+  margin-inline: auto;
+  padding-block: 1rem 2rem;
+  outline: none;
+}
+
+html { scroll-padding-top: 6rem; }
+.vista { scroll-margin-top: 6rem; }
+.js .vista { display: none; }
+.js .vista.activa { display: block; animation: entrada 0.35s ease-out; }
+
+@keyframes entrada {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.vista > * + * { margin-top: 2.25rem; }
+
+.vista-cab {
+  position: relative;
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.2rem 0 0.4rem 1.7rem;
+}
+.vista-cab::before {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  bottom: 0;
+  width: 2px;
+  background: var(--via);
+  opacity: 0.75;
+}
+.vista-cab::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  background: var(--fondo);
+  border: 2px solid var(--cian);
+  border-radius: 50%;
+  box-shadow: 0 0 14px rgba(34, 211, 238, 0.7);
+}
+
+.migas {
+  margin: 0;
+  font: 600 0.9rem/1.2 var(--f-titulos);
+  letter-spacing: 0.06em;
+  color: var(--cian);
+}
+
+h1 {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  line-height: 1.08;
+}
+h1:focus { outline: none; }
+h2 { margin: 0; font-weight: 600; font-size: clamp(1.35rem, 3vw, 1.75rem); line-height: 1.2; }
+h3 { margin: 0; font-weight: 600; font-size: 1.15rem; line-height: 1.3; }
+
+.intro {
+  max-width: 60ch;
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--texto-suave);
+}
+.prosa { max-width: 65ch; }
+.prosa > * { margin-block: 0; }
+.prosa > * + * { margin-top: 1rem; }
+.enlace { font-weight: 600; }
+
+/* Subapartados */
+.subnav { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.subnav a {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.92rem;
+  color: var(--texto-suave);
+  text-decoration: none;
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.subnav a:hover { color: var(--texto); border-color: var(--linea-viva); }
+.subnav a[aria-current="page"] {
+  color: #fff;
+  background: rgba(124, 58, 237, 0.32);
+  border-color: var(--violeta);
+}
+
+/* Anterior / siguiente */
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--linea);
+}
+.pager a {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0.7rem 1rem;
+  color: var(--texto);
+  text-decoration: none;
+  border: 1px solid var(--linea);
+  border-radius: 4px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.pager a:hover {
+  border-color: var(--violeta);
+  background: rgba(124, 58, 237, 0.16);
+}
+.pager small {
+  color: var(--texto-tenue);
+  font: 600 0.8rem var(--f-titulos);
+  letter-spacing: 0.06em;
+}
+.pager .sig { margin-left: auto; text-align: right; }
+
+/* Botones */
+.botones { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+
+.boton {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  padding: 0.85rem 1.6rem;
+  font: 600 1.05rem/1.2 var(--f-titulos);
+  color: #fff;
+  text-decoration: none;
+  background: var(--boton);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 0 0 rgba(79, 140, 255, 0);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.boton:hover {
+  box-shadow: 0 0 26px rgba(79, 140, 255, 0.55);
+  transform: translateY(-1px);
+}
+.boton .estado { font: 400 0.8rem/1.2 var(--f-texto); opacity: 0.85; }
+
+.boton.secundario {
+  background: transparent;
+  border-color: var(--linea-viva);
+}
+.boton.secundario:hover {
+  border-color: var(--cian);
+  box-shadow: 0 0 22px rgba(34, 211, 238, 0.3);
+}
+.boton[aria-disabled="true"] {
+  color: var(--texto-tenue);
+  background: transparent;
+  border: 1px dashed var(--linea-viva);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Portada */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+  padding-block: 2rem 2.5rem;
+}
+.hero-via {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+.hero-via .via-linea {
+  fill: none;
+  stroke: url(#grad-via);
+  stroke-width: 2;
+  stroke-dasharray: 3 12;
+  animation: fluir 3s linear infinite;
+}
+.hero-via .via-base {
+  fill: none;
+  stroke: url(#grad-via);
+  stroke-width: 1;
+  opacity: 0.35;
+}
+@keyframes fluir { to { stroke-dashoffset: -60; } }
+
+.hero-texto { display: grid; gap: 1.1rem; justify-items: start; }
+.hero-texto > * { margin: 0; }
+
+.estado-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.92rem;
+  color: var(--texto-suave);
+  background: rgba(17, 15, 54, 0.8);
+  border: 1px solid var(--linea-viva);
+  border-radius: 999px;
+}
+.estado-chip strong { color: var(--texto); }
+.punto {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--aviso);
+  box-shadow: 0 0 0 0 rgba(244, 114, 182, 0.7);
+  animation: pulso 2.2s ease-out infinite;
+}
+.estado-chip.listo .punto { background: var(--verde); }
+@keyframes pulso {
+  70% { box-shadow: 0 0 0 0.6rem rgba(244, 114, 182, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(244, 114, 182, 0); }
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 10vw, 5.4rem);
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 40px rgba(139, 92, 246, 0.7);
+}
+.lema {
+  font: 600 clamp(1.1rem, 3vw, 1.5rem)/1.3 var(--f-titulos);
+  color: var(--cian);
+}
+.hero-p { max-width: 52ch; font-size: 1.1rem; color: var(--texto-suave); }
+
+.hero-logo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(74vw, 21rem);
+  margin-inline: auto;
+}
+.hero-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 40px rgba(99, 102, 241, 0.55));
+}
+.hero-logo::before,
+.hero-logo::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed rgba(139, 92, 246, 0.5);
+  animation: girar 70s linear infinite;
+}
+.hero-logo::before { inset: -9%; }
+.hero-logo::after {
+  inset: -20%;
+  border-color: rgba(34, 211, 238, 0.28);
+  animation-duration: 110s;
+  animation-direction: reverse;
+}
+@keyframes girar { to { transform: rotate(360deg); } }
+
+/* Bloques y paneles */
+.bloque { display: grid; gap: 1.1rem; }
+.bloque > * { margin: 0; }
+
+.dos-col {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+.panel {
+  position: relative;
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+  padding: clamp(1.1rem, 3vw, 1.75rem);
+  background: linear-gradient(160deg, var(--superficie-2), var(--superficie));
+  border: 1px solid var(--linea);
+  border-radius: 4px;
+}
+.panel > * { margin: 0; }
+.panel::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 16px;
+  height: 16px;
+  border-top: 2px solid var(--cian);
+  border-left: 2px solid var(--cian);
+  pointer-events: none;
+}
+
+.paneles {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+
+.lista-puntos { margin: 0; padding-left: 1.2rem; }
+.lista-puntos li + li { margin-top: 0.5rem; }
+.lista-puntos li::marker { color: var(--violeta); }
+
+/* Fichas de datos */
+.ficha {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.65rem 1.5rem;
+  margin: 0;
+}
+.ficha dt { color: var(--texto-tenue); }
+.ficha dd { margin: 0; }
+
+.ficha-fila {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 1.25rem 1.5rem;
+  margin: 0;
+  padding: 1.25rem 0;
+  border-block: 1px solid var(--linea);
+}
+.ficha-fila dt {
+  font: 600 0.85rem/1.2 var(--f-titulos);
+  letter-spacing: 0.06em;
+  color: var(--texto-tenue);
+}
+.ficha-fila dd { margin: 0.25rem 0 0; font-weight: 500; }
+
+.etimologia {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  padding: 0.9rem 1.1rem;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid var(--linea);
+  border-radius: 4px;
+}
+.etimologia b {
+  font: 700 1.2rem/1.2 var(--f-titulos);
+  letter-spacing: 0.08em;
+}
+.etimologia span {
+  flex: 1 1 14rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--linea-viva);
+  color: var(--texto-suave);
+}
+
+/* Pasos y línea de tiempo */
+.pasos {
+  --nodo: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: paso;
+}
+.pasos > li {
+  position: relative;
+  padding: 0 0 1.4rem calc(var(--nodo) + 1rem);
+  counter-increment: paso;
+}
+.pasos > li:last-child { padding-bottom: 0; }
+.pasos > li::before {
+  content: counter(paso);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: var(--nodo);
+  height: var(--nodo);
+  font: 700 0.95rem/1 var(--f-titulos);
+  color: var(--cian);
+  background: var(--fondo);
+  border: 2px solid var(--cian);
+  border-radius: 50%;
+}
+.pasos > li::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--nodo) / 2 - 1px);
+  top: var(--nodo);
+  bottom: 0;
+  width: 2px;
+  background: var(--via);
+  opacity: 0.6;
+}
+.pasos > li:last-child::after { display: none; }
+.pasos strong { display: block; font: 600 1.1rem/1.3 var(--f-titulos); }
+.pasos span { color: var(--texto-suave); }
+
+.pasos.sin-numero > li::before { content: ""; --nodo: 1.1rem; }
+.pasos.sin-numero { --nodo: 1.1rem; }
+.pasos.sin-numero > li::before {
+  top: 0.25rem;
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.5);
+}
+.pasos.sin-numero > li::after { top: calc(var(--nodo) + 0.25rem); }
+
+/* Tablas */
+.tabla-caja {
+  overflow-x: auto;
+  border: 1px solid var(--linea);
+  border-radius: 4px;
+  background: var(--superficie);
+}
+table { width: 100%; min-width: 34rem; border-collapse: collapse; }
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--linea);
+}
+tr:last-child td { border-bottom: 0; }
+th {
+  font: 600 0.85rem/1.2 var(--f-titulos);
+  letter-spacing: 0.06em;
+  color: var(--cian);
+  background: var(--superficie-2);
+  white-space: nowrap;
+}
+td:first-child { font-weight: 600; }
+.tabla-ancha table { min-width: 46rem; }
+
+.rareza {
+  display: inline-block;
+  padding: 0.15rem 0.7rem;
+  font: 600 0.85rem/1.4 var(--f-titulos);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+}
+.rareza.comun { color: var(--texto-suave); }
+.rareza.rara { color: var(--azul); }
+.rareza.epica { color: #c084fc; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+/* Héroes y vehículos */
+.heroe { --color: var(--cian); }
+.heroe.orion { --color: var(--azul); }
+.heroe.lyra { --color: #c084fc; }
+.heroe.zeta { --color: var(--verde); }
+.heroe-cab { display: flex; align-items: center; gap: 1rem; }
+.heroe-cab h3 { font-size: 1.5rem; letter-spacing: 0.08em; }
+.emblema {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  color: var(--color);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent 70%);
+  border: 2px solid var(--color);
+  border-radius: 50%;
+  box-shadow: 0 0 18px color-mix(in srgb, var(--color) 40%, transparent);
+}
+.emblema svg {
+  width: 2.2rem;
+  height: 2.2rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.heroe .ficha dt { color: var(--color); }
+
+.vehiculo svg {
+  display: block;
+  width: 100%;
+  max-width: 18rem;
+  height: auto;
+  margin-bottom: 0.4rem;
+}
+
+/* Mapa */
+.mapa { display: grid; gap: 1.25rem; }
+.mapa-controles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.5rem;
+}
+.interruptor { display: inline-flex; align-items: center; gap: 0.6rem; cursor: pointer; }
+.interruptor input {
+  width: 1.2rem;
+  height: 1.2rem;
+  accent-color: var(--violeta-fuerte);
+}
+.mapa-svg {
+  display: block;
+  width: 100%;
+  max-width: 40rem;
+  height: auto;
+  margin-inline: auto;
+}
+.mapa-svg text {
+  font-family: var(--f-titulos);
+  font-weight: 600;
+  font-size: 19px;
+  fill: var(--texto);
+  text-anchor: middle;
+  paint-order: stroke;
+  stroke: #0a0828;
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+.mapa-svg .vacio { fill: var(--texto-tenue); font-size: 16px; letter-spacing: 0.1em; }
+.mapa-svg .tormenta { opacity: 0; transition: opacity 0.25s; }
+#ver-tormenta:checked ~ .mapa-svg .tormenta { opacity: 1; }
+
+.leyenda {
+  display: grid;
+  gap: 0.9rem 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  margin: 0;
+}
+.leyenda dt {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font: 600 1.05rem/1.2 var(--f-titulos);
+}
+.leyenda dd { margin: 0.2rem 0 0; color: var(--texto-suave); }
+.muestra {
+  flex: none;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  background: var(--c, var(--violeta));
+  box-shadow: 0 0 10px var(--c, var(--violeta));
+}
+
+/* Diferencias */
+.dif {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 1.4rem;
+}
+.dif li { position: relative; padding-left: 2.4rem; }
+.dif li::before {
+  content: "";
+  position: absolute;
+  left: 0.15rem;
+  top: 0.45rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  background: var(--cian);
+  transform: rotate(45deg);
+  box-shadow: 0 0 12px var(--cian);
+}
+.dif strong { display: block; font: 600 1.2rem/1.3 var(--f-titulos); }
+.dif span { color: var(--texto-suave); }
+
+/* Controles */
+kbd {
+  display: inline-block;
+  min-width: 2rem;
+  padding: 0.1rem 0.5rem;
+  font: 600 0.85rem/1.5 var(--f-titulos);
+  text-align: center;
+  color: var(--texto);
+  background: var(--superficie-2);
+  border: 1px solid var(--linea-viva);
+  border-bottom-width: 3px;
+  border-radius: 6px;
+}
+.teclas td:first-child { white-space: nowrap; }
+
+/* Jugar y descargar */
+.jugar-panel {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+  background:
+    radial-gradient(30rem 14rem at 100% 0%, rgba(124, 58, 237, 0.3), transparent 70%),
+    linear-gradient(160deg, var(--superficie-2), var(--superficie));
+  border: 1px solid var(--linea-viva);
+  border-radius: 4px;
+}
+.jugar-panel > * { margin: 0; }
+.jugar-panel .boton { font-size: 1.2rem; padding: 1rem 2rem; }
+
+/* Galería de capturas */
+.galeria {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+.galeria figure { margin: 0; }
+.galeria img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid var(--linea);
+  border-radius: 4px;
+}
+.galeria figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+
+/* Fundador */
+.retrato { margin: 0; }
+.retrato img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--linea);
+  border-radius: 4px;
+}
+.retrato figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--texto-suave);
+}
+
+.afic {
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+}
+.afic figure { margin: 0; }
+.afic img,
+.foto-pendiente {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.afic img { border: 1px solid var(--linea); }
+.foto-pendiente {
+  display: grid;
+  place-items: center;
+  color: var(--texto-tenue);
+  font-size: 0.92rem;
+  border: 1px dashed var(--linea-viva);
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.09) 0 12px,
+    transparent 12px 24px
+  );
+}
+
+/* Formulario */
+.formulario { display: grid; gap: 1rem; }
+label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.92rem;
+  color: var(--texto-suave);
+}
+input, textarea {
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  font: inherit;
+  color: var(--texto);
+  background: var(--fondo);
+  border: 1px solid var(--linea);
+  border-radius: 3px;
+}
+textarea { min-height: 9rem; resize: vertical; }
+input::placeholder, textarea::placeholder { color: #7f7ab8; }
+input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--azul);
+  outline-offset: 1px;
+  border-color: var(--azul);
+}
+
+.correo-linea {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+.correo {
+  font: 600 1.15rem/1.3 var(--f-titulos);
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+.boton-mini {
+  padding: 0.45rem 0.9rem;
+  font: 600 0.85rem/1 var(--f-titulos);
+  color: var(--texto);
+  background: var(--superficie-2);
+  border: 1px solid var(--linea-viva);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.boton-mini:hover { border-color: var(--cian); }
+
+.aviso-form {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  background: rgba(79, 140, 255, 0.12);
+  border: 1px solid var(--azul);
+  border-radius: 4px;
+}
+
+/* Pie de página */
+.pie {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  max-width: var(--ancho);
+  margin: 2.5rem auto 0;
+  padding-top: 1.5rem;
+  font-size: 0.92rem;
+  color: var(--texto-suave);
+  border-top: 1px solid var(--linea);
+}
+.pie p { margin: 0; }
+
+/* Menú */
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.22s ease, visibility 0s linear 0.22s;
+}
+.menu.abierto {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+}
+
+.menu-fondo {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 2, 16, 0.75);
+  backdrop-filter: blur(3px);
+}
+
+.menu-panel {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: min(100%, 27rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding:
+    max(1rem, env(safe-area-inset-top, 0px))
+    1.25rem
+    max(1.5rem, env(safe-area-inset-bottom, 0px))
+    max(1.25rem, env(safe-area-inset-left, 0px));
+  background: linear-gradient(180deg, #0e0c33, #080720);
+  border-right: 1px solid var(--linea-viva);
+  transform: translateX(-24px);
+  transition: transform 0.22s ease;
+}
+.menu.abierto .menu-panel { transform: none; }
+
+.menu-cab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.menu-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--texto);
+  text-decoration: none;
+  font: 700 1.2rem/1 var(--f-titulos);
+  letter-spacing: 0.1em;
+}
+.menu-logo img { display: block; width: 3rem; height: 3rem; }
+.menu-logo b { color: var(--cian); }
+
+.menu-cerrar {
+  padding: 0.5rem 0.9rem;
+  font: 600 0.9rem/1 var(--f-titulos);
+  color: var(--texto);
+  background: transparent;
+  border: 1px solid var(--linea-viva);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.menu-cerrar:hover { border-color: var(--cian); }
+.menu-lema { margin: 1rem 0 0; font-size: 0.95rem; color: var(--texto-suave); }
+
+.areas {
+  position: relative;
+  margin: 1.25rem 0 0;
+  padding: 0 0 0 1.4rem;
+  list-style: none;
+}
+.areas::before {
+  content: "";
+  position: absolute;
+  left: 0.42rem;
+  top: 0.9rem;
+  bottom: 0.9rem;
+  width: 2px;
+  background: var(--via);
+  opacity: 0.6;
+}
+.areas > li { position: relative; }
+.areas > li::before {
+  content: "";
+  position: absolute;
+  left: -1.4rem;
+  top: 0.95rem;
+  width: 0.95rem;
+  height: 0.95rem;
+  background: var(--fondo);
+  border: 2px solid var(--violeta);
+  border-radius: 50%;
+}
+.areas > li.actual::before {
+  border-color: var(--cian);
+  box-shadow: 0 0 12px var(--cian);
+}
+
+.menu-item,
+.area-boton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.7rem 0.6rem;
+  text-align: left;
+  color: var(--texto);
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  font: 600 1.15rem/1.25 var(--f-titulos);
+  cursor: pointer;
+}
+.menu-item:hover,
+.area-boton:hover { background: rgba(124, 58, 237, 0.18); }
+.area-nota {
+  display: block;
+  font: 400 0.85rem/1.3 var(--f-texto);
+  color: var(--texto-tenue);
+}
+.area-boton::after {
+  content: "";
+  flex: none;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-right: 2px solid var(--cian);
+  border-bottom: 2px solid var(--cian);
+  transform: rotate(45deg);
+  transition: transform 0.2s;
+}
+.area-boton[aria-expanded="true"]::after { transform: rotate(-135deg); }
+
+.subs {
+  margin: 0 0 0.6rem;
+  padding: 0 0 0 0.6rem;
+  list-style: none;
+}
+.subs a {
+  display: block;
+  padding: 0.5rem 0.7rem;
+  color: var(--texto-suave);
+  text-decoration: none;
+  border-radius: 4px;
+}
+.subs a:hover { color: var(--texto); background: rgba(124, 58, 237, 0.18); }
+.subs a[aria-current="page"],
+.menu-item[aria-current="page"] {
+  color: var(--cian);
+  background: rgba(34, 211, 238, 0.1);
+}
+
+/* Pantallas grandes */
+@media (min-width: 52rem) {
+  .hero { grid-template-columns: 1.3fr 0.7fr; padding-block: 3rem 3.5rem; }
+  .dos-col { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .dos-col.desigual { grid-template-columns: 1.4fr 1fr; }
+}
+
+/* Pantallas pequeñas */
+@media (max-width: 36rem) {
+  .marca { display: none; }
+  .barra-cta .extra { display: none; }
+  .ficha { grid-template-columns: 1fr; gap: 0.1rem; }
+  .ficha dd { margin-bottom: 0.6rem; }
+  .pager a { width: 100%; }
+  .pager .sig { text-align: left; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
+  </style>
+
+  
 </head>
 <body>
-  <h1>Archivo en sustitución</h1>
+  
+<button class="saltar" type="button">Saltar al contenido</button>
+
+<div id="app">
+
+  <header class="barra">
+    <button class="menu-boton" id="menu-boton" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir el menú">
+      <img src="img/logo.svg" alt="" width="44" height="44">
+      <span>Menú</span>
+    </button>
+    <a class="marca" href="#inicio" aria-label="GALAVIA RD, ir al inicio">GALAVIA <b>RD</b></a>
+    <a class="barra-cta" href="#jugar-en-la-web">Jugar<span class="extra"> y descargar</span></a>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+
+    <!-- ===================== INICIO ===================== -->
+    <section class="vista" id="inicio" data-area="" aria-labelledby="t-inicio">
+      <div class="hero">
+        <svg class="hero-via" viewBox="0 0 1200 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="grad-via" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="0">
+              <stop offset="0" stop-color="#8b5cf6"/>
+              <stop offset=".55" stop-color="#4f8cff"/>
+              <stop offset="1" stop-color="#22d3ee"/>
+            </linearGradient>
+            <radialGradient id="grad-cometa">
+              <stop offset="0" stop-color="#e0f7ff"/>
+              <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <path id="via-hero" class="via-base" d="M-20 500 C 180 540, 300 380, 520 400 S 860 520, 1000 300 S 1180 120, 1230 80"/>
+          <path class="via-linea" d="M-20 500 C 180 540, 300 380, 520 400 S 860 520, 1000 300 S 1180 120, 1230 80"/>
+          <g id="cometa">
+            <circle r="16" fill="url(#grad-cometa)"/>
+            <circle r="3.5" fill="#e0f7ff"/>
+            <animateMotion dur="14s" repeatCount="indefinite" rotate="auto"><mpath href="#via-hero"/></animateMotion>
+          </g>
+        </svg>
+
+        <div class="hero-texto">
+          <p class="estado-chip"><span class="punto"></span> Galavia, el videojuego: <strong data-estado-texto>Próximamente</strong></p>
+          <h1 id="t-inicio" tabindex="-1">GALAVIA RD</h1>
+          <p class="lema">El camino hacia un universo de posibilidades.</p>
+          <p class="hero-p">Somos una empresa de videojuegos de la República Dominicana. Estamos creando Galavia, un battle royale de supervivencia para jugar con amigos desde el navegador y desde el móvil.</p>
+          <div class="botones">
+            <a class="boton" href="#juego-que-es">Conoce Galavia</a>
+            <a class="boton secundario" href="#jugar-en-la-web">Jugar o descargar</a>
+          </div>
+        </div>
+
+        <div class="hero-logo">
+          <img src="img/logo.svg" alt="Logo de GALAVIA RD: una G formada por una órbita con un satélite" width="336" height="336">
+        </div>
+      </div>
+
+      <div class="bloque">
+        <h2>Quiénes somos</h2>
+        <p class="prosa">GALAVIA RD es una empresa de videojuegos de la República Dominicana. Hacemos juegos de disparos y de carreras, y nuestro primer proyecto es Galavia.</p>
+        <dl class="ficha-fila">
+          <div><dt>FUNDACIÓN</dt><dd>2 de noviembre de 2026</dd></div>
+          <div><dt>FUNDADOR</dt><dd>Fundador de GALAVIA RD</dd></div>
+          <div><dt>ORIGEN</dt><dd>República Dominicana</dd></div>
+          <div><dt>PRIMER JUEGO</dt><dd>Galavia, en desarrollo</dd></div>
+        </dl>
+        <p><a class="enlace" href="#empresa-quienes-somos">Conoce más de la empresa</a></p>
+      </div>
+
+      <div class="dos-col desigual">
+        <div class="bloque">
+          <h2>De dónde nace la idea</h2>
+          <p class="prosa">Galavia nace de la necesidad del fundador de salir adelante. Su meta es crear un videojuego mejor que los que ya existen: más inmersivo, más fluido y con partidas más justas.</p>
+          <p class="prosa">La idea sale de lo que más le gusta: las carreras, la supervivencia y los juegos de disparos.</p>
+          <p><a class="enlace" href="#empresa-idea">Leer la historia completa</a></p>
+        </div>
+        <article class="panel adelanto">
+          <h3>Galavia</h3>
+          <p>Battle royale de supervivencia en 2D.</p>
+          <ul class="lista-puntos">
+            <li>30 combatientes en cada partida</li>
+            <li>4 héroes con habilidades propias</li>
+            <li>Vehículos con nitro y una autopista en órbita</li>
+            <li>Partidas con amigos usando un código de sala</li>
+          </ul>
+          <p><a class="enlace" href="#juego-que-es">Ver todo sobre el juego</a></p>
+        </article>
+      </div>
+
+      <div class="panel">
+        <h2>Pronto podrás jugar</h2>
+        <p>Galavia todavía está en desarrollo. Cuando esté listo, podrás jugar desde el navegador y descargar el APK para Android. Estos botones se activarán aquí.</p>
+        <div class="botones">
+          <a class="boton" data-enlace="jugar" aria-disabled="true"><span>Jugar en la web</span><span class="estado">Próximamente</span></a>
+          <a class="boton secundario" data-enlace="apk" aria-disabled="true"><span>Descargar APK</span><span class="estado">Próximamente</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== EMPRESA ===================== -->
+    <section class="vista" id="empresa-quienes-somos" data-area="empresa" aria-labelledby="t-empresa-quienes-somos">
+      <header class="vista-cab">
+        <p class="migas">Empresa</p>
+        <h1 id="t-empresa-quienes-somos" tabindex="-1">Quiénes somos</h1>
+        <p class="intro">Hacemos videojuegos de disparos y de carreras, pensados para jugar con amigos.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre la empresa"></nav>
+
+      <dl class="ficha-fila">
+        <div><dt>EMPRESA</dt><dd>GALAVIA RD</dd></div>
+        <div><dt>ORIGEN</dt><dd>República Dominicana</dd></div>
+        <div><dt>FUNDADOR</dt><dd>Fundador de GALAVIA RD</dd></div>
+        <div><dt>FUNDACIÓN</dt><dd>2 de noviembre de 2026</dd></div>
+      </dl>
+
+      <div class="bloque">
+        <h2>El nombre</h2>
+        <p class="etimologia"><b>GALAVIA</b><span>galaxia + vía, del latín <i>via</i>: «camino»</span></p>
+        <p class="prosa">Un camino que cruza una galaxia. Esa idea está en el logo, donde la G es una órbita y la barra apunta al centro como una mira, y en el juego, donde todo transcurre en un planeta lejano con una autopista en órbita.</p>
+        <p class="prosa">«RD» es República Dominicana, el país de donde sale la empresa.</p>
+      </div>
+
+      <div class="bloque">
+        <h2>Qué hacemos</h2>
+        <ul class="lista-puntos prosa">
+          <li>Videojuegos de disparos y de carreras.</li>
+          <li>Galavia, nuestro primer juego, que está en desarrollo.</li>
+          <li>Juegos donde todo se consigue dentro de la partida, sin pagar para ganar.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="vista" id="empresa-fundacion" data-area="empresa" aria-labelledby="t-empresa-fundacion">
+      <header class="vista-cab">
+        <p class="migas">Empresa</p>
+        <h1 id="t-empresa-fundacion" tabindex="-1">Fundación</h1>
+        <p class="intro">GALAVIA RD se fundó el 2 de noviembre de 2026.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre la empresa"></nav>
+
+      <div class="bloque">
+        <p class="prosa">La fundó el fundador de GALAVIA RD con una meta clara: crear su propio videojuego y que sea mejor que los que ya existen.</p>
+      </div>
+
+      <div class="bloque">
+        <h2>El camino hasta ahora</h2>
+        <ol class="pasos sin-numero">
+          <li><strong>2 de noviembre de 2026</strong><span>Nace GALAVIA RD.</span></li>
+          <li><strong>Ahora</strong><span>Galavia, el videojuego, está en desarrollo.</span></li>
+          <li><strong>Próximamente</strong><span>Lanzamiento: jugar desde la web y descargar el APK.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="vista" id="empresa-idea" data-area="empresa" aria-labelledby="t-empresa-idea">
+      <header class="vista-cab">
+        <p class="migas">Empresa</p>
+        <h1 id="t-empresa-idea" tabindex="-1">De dónde nace la idea</h1>
+        <p class="intro">De la necesidad de salir adelante y de las ganas de crear algo propio.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre la empresa"></nav>
+
+      <div class="paneles">
+        <article class="panel">
+          <h3>La necesidad</h3>
+          <p>El fundador quiere salir adelante. Crear una empresa de videojuegos es su camino para conseguirlo.</p>
+        </article>
+        <article class="panel">
+          <h3>La pasión</h3>
+          <p>Le gustan las carreras, la supervivencia y los juegos de disparos. De esas tres cosas sale Galavia.</p>
+        </article>
+        <article class="panel">
+          <h3>La meta</h3>
+          <p>Crear un videojuego mejor que los que ya existen: con más inmersión, más fluido y con partidas más justas.</p>
+        </article>
+      </div>
+
+      <div class="bloque">
+        <h2>Lo que Galavia quiere cambiar</h2>
+        <ul class="lista-puntos prosa">
+          <li>Que ganar no dependa de pagar: todo se encuentra en el mapa.</li>
+          <li>Que jugar con amigos sea cuestión de segundos: un código y listo.</li>
+          <li>Que el juego funcione en cualquier móvil o PC, sin descargas enormes.</li>
+        </ul>
+        <p><a class="enlace" href="#juego-diferencias">Ver todo lo que nos hace diferentes</a></p>
+      </div>
+    </section>
+
+    <section class="vista" id="empresa-mision" data-area="empresa" aria-labelledby="t-empresa-mision">
+      <header class="vista-cab">
+        <p class="migas">Empresa</p>
+        <h1 id="t-empresa-mision" tabindex="-1">Misión y objetivos</h1>
+        <p class="intro">Crear videojuegos de supervivencia y de carreras mejores que los que ya existen.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre la empresa"></nav>
+
+      <div class="paneles">
+        <article class="panel">
+          <h3>Mayor inmersión</h3>
+          <p>Sonido y efectos que reaccionan a lo que pasa en la partida: la tormenta, la poca vida y los eventos cósmicos que cambian cada partida.</p>
+        </article>
+        <article class="panel">
+          <h3>Jugabilidad más fluida</h3>
+          <p>Un juego ligero que corre en el navegador, con controles pensados para el móvil y para el teclado y el ratón.</p>
+        </article>
+        <article class="panel">
+          <h3>Partidas más justas y emocionantes</h3>
+          <p>Todo se consigue en el mapa, sin pagar para ganar. Las partidas se deciden por la habilidad y por el equipo.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== EL JUEGO ===================== -->
+    <section class="vista" id="juego-que-es" data-area="juego" aria-labelledby="t-juego-que-es">
+      <header class="vista-cab">
+        <p class="migas">Galavia, el juego</p>
+        <h1 id="t-juego-que-es" tabindex="-1">Qué es Galavia</h1>
+        <p class="intro">Un battle royale de supervivencia en 2D, visto desde arriba, en un planeta de cristal y neón.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre el juego"></nav>
+
+      <div class="bloque">
+        <p class="prosa">30 participantes llegan desde una nave al Planeta Galavia. Exploran el mapa, encuentran objetos útiles, conducen vehículos y sobreviven a la Tormenta Cósmica hasta que queda un solo equipo.</p>
+        <dl class="ficha-fila">
+          <div><dt>GÉNERO</dt><dd>Battle royale de supervivencia</dd></div>
+          <div><dt>PARTICIPANTES</dt><dd>30 por partida: de 1 a 4 amigos y el resto bots</dd></div>
+          <div><dt>DURACIÓN</dt><dd>Unos 8 minutos</dd></div>
+          <div><dt>DÓNDE SE JUEGA</dt><dd>Navegador de PC y móvil. Se instala como app y hay APK</dd></div>
+          <div><dt>ESTADO</dt><dd><span data-estado-texto>Próximamente</span></dd></div>
+        </dl>
+      </div>
+
+      <div class="bloque" id="galeria-bloque" hidden>
+        <h2>Capturas</h2>
+        <div class="galeria" id="galeria"></div>
+      </div>
+
+      <div class="bloque">
+        <h2>Una partida en una frase</h2>
+        <p class="prosa">Exploras, recoges objetos, conduces, te recuperas y aguantas la tormenta hasta que tu equipo consigue llegar al final.</p>
+        <p><a class="enlace" href="#juego-partida">Ver cómo es una partida</a></p>
+      </div>
+    </section>
+
+
+    <section class="vista" id="juego-modos" data-area="juego" aria-labelledby="t-juego-modos">
+      <header class="vista-cab">
+        <p class="migas">Galavia, el juego</p>
+        <h1 id="t-juego-modos" tabindex="-1">Modos de juego</h1>
+        <p class="intro">Juega por tu cuenta o en equipo con tus amigos.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre el juego"></nav>
+
+      <div class="paneles">
+        <article class="panel">
+          <h3>Solo</h3>
+          <p>Todos contra todos: tú contra 29 bots, cada uno por su cuenta. Si juegas online, también puede haber más humanos en la partida.</p>
+        </article>
+        <article class="panel">
+          <h3>Escuadra</h3>
+          <p>Hasta 4 amigos forman un equipo. El resto son bots en escuadras de 4. Gana el último equipo vivo.</p>
+        </article>
+      </div>
+
+      <div class="bloque">
+        <h2>Derribo y revivir</h2>
+        <p class="prosa">En el modo Escuadra, si te quedas sin vida y aún queda algún compañero vivo, no quedas fuera al instante: puedes esperar a que un compañero te ayude.</p>
+        <p class="prosa">Un compañero puede ayudarte manteniendo <kbd>E</kbd> durante unos segundos. Si nadie te ayuda, quedas fuera de la ronda.</p>
+      </div>
+
+      <div class="bloque">
+        <h2>Jugar con amigos</h2>
+        <p class="prosa">Un jugador crea una sala y recibe un código de 5 letras. Sus amigos entran con ese código. El anfitrión elige el modo y empieza la partida; los bots rellenan hasta 30 participantes. Sin cuentas ni registro.</p>
+        <p><a class="enlace" href="#jugar-con-amigos">Ver el paso a paso</a></p>
+      </div>
+    </section>
+
+    <section class="vista" id="juego-partida" data-area="juego" aria-labelledby="t-juego-partida">
+      <header class="vista-cab">
+        <p class="migas">Galavia, el juego</p>
+        <h1 id="t-juego-partida" tabindex="-1">Cómo es una partida</h1>
+        <p class="intro">Unos 8 minutos de exploración y supervivencia.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre el juego"></nav>
+
+      <ol class="pasos">
+        <li><strong>Menú</strong><span>Eliges tu nombre, tu héroe y el modo de juego.</span></li>
+        <li><strong>La Nave Galavia</strong><span>Cruza el planeta en línea recta durante unos 35 segundos. Saltas cuando quieras con <kbd>Espacio</kbd> o con el botón Saltar. Planeas durante unos segundos y aterrizas.</span></li>
+        <li><strong>Exploración</strong><span>Encuentras objetos de apoyo, curas, chaleco y casco en edificios y por el suelo.</span></li>
+        <li><strong>Tormenta Cósmica</strong><span>La zona segura se reduce en 5 fases. El mapa muestra la zona actual y la siguiente, con aviso antes de cada cierre.</span></li>
+        <li><strong>Eventos cósmicos</strong><span>Cápsulas con objetos especiales y lluvias de meteoritos que cambian cada partida.</span></li>
+        <li><strong>Final</strong><span>Gana el último equipo que siga en la partida. La pantalla final muestra tu posición y cuánto tiempo has sobrevivido.</span></li>
+      </ol>
+
+      <div class="bloque">
+        <h2>Tormenta Cósmica</h2>
+        <div class="tabla-caja">
+          <table>
+            <thead><tr><th>Fase</th><th>Intensidad de la tormenta</th></tr></thead>
+            <tbody>
+              <tr><td>Fase 1</td><td>Inicial</td></tr>
+              <tr><td>Fase 2</td><td>Moderada</td></tr>
+              <tr><td>Fase 3</td><td>Alta</td></tr>
+              <tr><td>Fase 4</td><td>Muy alta</td></tr>
+              <tr><td>Fase 5</td><td>Máxima</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="paneles">
+        <article class="panel">
+          <h3>Cápsula Estelar</h3>
+          <p>Cada cierto tiempo cae una cápsula en un punto anunciado. Dentro hay objetos especiales para la partida.</p>
+        </article>
+        <article class="panel">
+          <h3>Lluvia de meteoritos</h3>
+          <p>Un evento cósmico que cambia el entorno y obliga a prestar atención al mapa.</p>
+        </article>
+        <article class="panel">
+          <h3>Tu salud</h3>
+          <p>Empiezas con 100 puntos de salud y puedes sumar protección adicional.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="vista" id="juego-heroes" data-area="juego" aria-labelledby="t-juego-heroes">
+      <header class="vista-cab">
+        <p class="migas">Galavia, el juego</p>
+        <h1 id="t-juego-heroes" tabindex="-1">Héroes</h1>
+        <p class="intro">Cuatro héroes, cada uno con una pasiva y una habilidad especial.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre el juego"></nav>
+
+      <div class="paneles">
+        <article class="panel heroe">
+          <div class="heroe-cab">
+            <span class="emblema"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 12l12 12-12 12M26 12l12 12-12 12"/></svg></span>
+            <h3>NOVA</h3>
+          </div>
+          <dl class="ficha">
+            <dt>Pasiva</dt><dd>+6 % de velocidad</dd>
+            <dt>Habilidad</dt><dd><strong>Impulso Estelar:</strong> un salto rápido en la dirección en que te mueves</dd>
+            <dt>Recarga</dt><dd>14 segundos</dd>
+          </dl>
+        </article>
+        <article class="panel heroe orion">
+          <div class="heroe-cab">
+            <span class="emblema"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6l15 9v18l-15 9-15-9V15z"/><path d="M24 17l7 4v8l-7 4-7-4v-8z"/></svg></span>
+            <h3>ORION</h3>
+          </div>
+          <dl class="ficha">
+            <dt>Pasiva</dt><dd>+15 de escudo máximo</dd>
+            <dt>Habilidad</dt><dd><strong>Barrera Orbital:</strong> crea una barrera protectora temporal</dd>
+            <dt>Recarga</dt><dd>28 segundos</dd>
+          </dl>
+        </article>
+        <article class="panel heroe lyra">
+          <div class="heroe-cab">
+            <span class="emblema"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="3"/><path d="M14 14a14 14 0 0 0 0 20M34 14a14 14 0 0 1 0 20M19 19a7 7 0 0 0 0 10M29 19a7 7 0 0 1 0 10"/></svg></span>
+            <h3>LYRA</h3>
+          </div>
+          <dl class="ficha">
+            <dt>Pasiva</dt><dd>Radio de recogida de objetos +50 %</dd>
+            <dt>Habilidad</dt><dd><strong>Pulso Radar:</strong> muestra elementos cercanos durante unos segundos</dd>
+            <dt>Recarga</dt><dd>30 segundos</dd>
+          </dl>
+        </article>
+        <article class="panel heroe zeta">
+          <div class="heroe-cab">
+            <span class="emblema"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M24 14v20M14 24h20"/></svg></span>
+            <h3>ZETA</h3>
+          </div>
+          <dl class="ficha">
+            <dt>Pasiva</dt><dd>Las curas van un 20 % más rápido</dd>
+            <dt>Habilidad</dt><dd><strong>Nanocuración:</strong> recupera salud durante unos segundos</dd>
+            <dt>Recarga</dt><dd>32 segundos</dd>
+          </dl>
+        </article>
+      </div>
+    </section>
+
+    <section class="vista" id="juego-armas" data-area="juego" aria-labelledby="t-juego-armas">
+      <header class="vista-cab">
+        <p class="migas">Galavia, el juego</p>
+        <h1 id="t-juego-armas" tabindex="-1">Equipo y objetos</h1>
+        <p class="intro">Objetos de apoyo para explorar el mapa y cuidar a tu personaje.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre Galavia"></nav>
+      <div class="paneles">
+        <article class="panel">
+          <h3>Botiquín</h3>
+          <p>Objeto de recuperación para ayudar al personaje a continuar la partida.</p>
+        </article>
+        <article class="panel">
+          <h3>Escudo</h3>
+          <p>Equipo de protección que aporta una capa adicional de seguridad dentro del juego.</p>
+        </article>
+        <article class="panel">
+          <h3>Chaleco y casco</h3>
+          <p>Elementos de protección que forman parte del equipamiento del personaje.</p>
+        </article>
+        <article class="panel">
+          <h3>Recursos</h3>
+          <p>Recoge objetos útiles que aparecen repartidos por el mapa.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="vista" id="juego-mapa" data-area="juego" aria-labelledby="t-juego-mapa">
+      <header class="vista-cab">
+        <p class="migas">Galavia, el juego</p>
+        <h1 id="t-juego-mapa" tabindex="-1">Mapa: Planeta Galavia</h1>
+        <p class="intro">Un mapa fijo, igual para todos, con zonas muy distintas y una autopista que rodea el planeta.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre el juego"></nav>
+
+      <div class="mapa">
+        <label class="interruptor"><input type="checkbox" id="ver-tormenta"> <span>Mostrar la Tormenta Cósmica (fases 1 a 5)</span></label>
+        <svg class="mapa-svg" id="mapa-svg" viewBox="0 0 640 640" role="img" aria-labelledby="mapa-t mapa-d">
+          <title id="mapa-t">Esquema del Planeta Galavia</title>
+          <desc id="mapa-d">Un planeta redondo con la Autopista Orbital en anillo, el Cráter Violeta en el centro, el Puerto Estelar al sur, el Bosque Cristal, la Base Nebulosa, el Pueblo Luna y el Lago Neón. Fuera del planeta está el Vacío.</desc>
+          <defs>
+            <radialGradient id="g-planeta" cx="50%" cy="45%" r="60%">
+              <stop offset="0" stop-color="#241f7a"/>
+              <stop offset="1" stop-color="#0f0d36"/>
+            </radialGradient>
+            <polygon id="cristal" points="0,-11 7,0 0,11 -7,0"/>
+          </defs>
+
+          <circle cx="320" cy="320" r="304" fill="none" stroke="#2c2878" stroke-dasharray="4 8"/>
+          <text class="vacio" x="320" y="24">EL VACÍO</text>
+          <circle cx="320" cy="320" r="270" fill="url(#g-planeta)" stroke="#4b43c9" stroke-width="3"/>
+
+          <!-- Lago Neón -->
+          <ellipse cx="200" cy="410" rx="64" ry="38" fill="#2563eb" fill-opacity=".45" stroke="#22d3ee" stroke-width="2" stroke-dasharray="5 5"/>
+          <!-- Cráter Violeta -->
+          <circle cx="320" cy="320" r="62" fill="#4c1fc4" fill-opacity=".55" stroke="#8b5cf6" stroke-width="2"/>
+          <circle cx="320" cy="320" r="40" fill="none" stroke="#a78bfa" stroke-opacity=".7"/>
+          <circle cx="320" cy="320" r="16" fill="#a78bfa" fill-opacity=".8"/>
+          <!-- Bosque Cristal -->
+          <g fill="#22d3ee" fill-opacity=".8">
+            <use href="#cristal" x="160" y="196"/><use href="#cristal" x="190" y="180"/><use href="#cristal" x="222" y="198"/>
+            <use href="#cristal" x="175" y="226"/><use href="#cristal" x="207" y="232"/><use href="#cristal" x="140" y="228"/>
+            <use href="#cristal" x="236" y="166"/>
+          </g>
+          <!-- Base Nebulosa -->
+          <g fill="#3b2fa8" fill-opacity=".7" stroke="#a78bfa" stroke-width="2">
+            <rect x="405" y="160" width="90" height="70"/>
+            <rect x="420" y="175" width="26" height="40" fill="none"/>
+            <rect x="456" y="175" width="26" height="40" fill="none"/>
+          </g>
+          <!-- Pueblo Luna -->
+          <g fill="#8b5cf6" fill-opacity=".65">
+            <rect x="420" y="334" width="22" height="18"/><rect x="450" y="338" width="20" height="16"/>
+            <rect x="478" y="332" width="22" height="20"/><rect x="434" y="360" width="20" height="16"/>
+          </g>
+          <!-- Puerto Estelar -->
+          <g fill="#4f8cff" fill-opacity=".7">
+            <rect x="262" y="452" width="26" height="16"/><rect x="294" y="448" width="26" height="20"/>
+            <rect x="326" y="452" width="26" height="16"/><rect x="358" y="448" width="26" height="20"/>
+          </g>
+
+          <!-- Autopista Orbital -->
+          <circle cx="320" cy="320" r="205" fill="none" stroke="#2a2672" stroke-width="18"/>
+          <circle cx="320" cy="320" r="205" fill="none" stroke="#cfd3ff" stroke-width="2" stroke-dasharray="10 12" stroke-opacity=".7"/>
+          <g fill="none" stroke="#22d3ee" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+            <g transform="rotate(25 320 320)"><path d="M520 310l14 10-14 10"/></g>
+            <g transform="rotate(115 320 320)"><path d="M520 310l14 10-14 10"/></g>
+            <g transform="rotate(205 320 320)"><path d="M520 310l14 10-14 10"/></g>
+            <g transform="rotate(295 320 320)"><path d="M520 310l14 10-14 10"/></g>
+          </g>
+
+          <!-- Tormenta Cósmica: fases 1 a 5 -->
+
+          <g class="tormenta" fill="none" stroke="#f472b6" stroke-width="2.5" stroke-dasharray="7 6">
+            <circle cx="335" cy="312" r="240"/>
+            <circle cx="345" cy="305" r="180"/>
+            <circle cx="338" cy="312" r="125"/>
+            <circle cx="330" cy="318" r="80"/>
+            <circle cx="326" cy="320" r="42"/>
+          </g>
+          <g class="tormenta num">
+            <text x="575" y="318" fill="#f9a8d4">1</text>
+            <text x="525" y="311" fill="#f9a8d4">2</text>
+            <text x="463" y="318" fill="#f9a8d4">3</text>
+            <text x="410" y="324" fill="#f9a8d4">4</text>
+            <text x="368" y="326" fill="#f9a8d4">5</text>
+          </g>
+
+          <!-- Nombres -->
+          <text x="320" y="146">Autopista Orbital</text>
+          <text x="320" y="414">Cráter Violeta</text>
+          <text x="323" y="502">Puerto Estelar</text>
+          <text x="190" y="266">Bosque Cristal</text>
+          <text x="450" y="255">Base Nebulosa</text>
+          <text x="460" y="392">Pueblo Luna</text>
+          <text x="200" y="417">Lago Neón</text>
+        </svg>
+      </div>
+
+      <dl class="leyenda">
+        <div><dt><span class="muestra" style="--c:#a78bfa"></span>Cráter Violeta</dt><dd>El centro del planeta, con muchos objetos para recoger.</dd></div>
+        <div><dt><span class="muestra" style="--c:#4f8cff"></span>Puerto Estelar</dt><dd>Al sur, con muelles y naves.</dd></div>
+        <div><dt><span class="muestra" style="--c:#22d3ee"></span>Bosque Cristal</dt><dd>Los cristales hacen de árboles y forman parte del paisaje.</dd></div>
+        <div><dt><span class="muestra" style="--c:#a78bfa"></span>Base Nebulosa</dt><dd>Una zona con muros y edificios.</dd></div>
+        <div><dt><span class="muestra" style="--c:#8b5cf6"></span>Pueblo Luna</dt><dd>Casas pequeñas con puertas.</dd></div>
+        <div><dt><span class="muestra" style="--c:#2563eb"></span>Lago Neón</dt><dd>Una zona de agua que ralentiza el movimiento.</dd></div>
+        <div><dt><span class="muestra" style="--c:#cfd3ff"></span>Autopista Orbital</dt><dd>Una carretera en anillo con rampas de nitro y vehículos.</dd></div>
+        <div><dt><span class="muestra" style="--c:#f472b6"></span>El Vacío</dt><dd>El espacio que rodea el planeta.</dd></div>
+      </dl>
+      <p class="prosa">Esquema orientativo: sirve para ver cómo se reparten las zonas, no a escala. Por el mapa hay edificios, rocas, cristales y objetos repartidos para explorar.</p>
+    </section>
+
+    <section class="vista" id="juego-vehiculos" data-area="juego" aria-labelledby="t-juego-vehiculos">
+      <header class="vista-cab">
+        <p class="migas">Galavia, el juego</p>
+        <h1 id="t-juego-vehiculos" tabindex="-1">Vehículos y Autopista Orbital</h1>
+        <p class="intro">Exploración y carreras en el mismo juego.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre el juego"></nav>
+
+      <div class="paneles">
+        <article class="panel vehiculo">
+          <svg viewBox="0 0 200 110" role="img" aria-label="Dibujo visto desde arriba del buggy Cometa">
+            <g fill="#06051a" stroke="#4b43c9" stroke-width="2"><rect x="44" y="12" width="34" height="14" rx="5"/><rect x="44" y="84" width="34" height="14" rx="5"/><rect x="128" y="12" width="34" height="14" rx="5"/><rect x="128" y="84" width="34" height="14" rx="5"/></g>
+            <path d="M30 45l-20 10 20 10z" fill="#4f8cff"/>
+            <rect x="30" y="25" width="140" height="60" rx="18" fill="#2a2680" stroke="#8b5cf6" stroke-width="3"/>
+            <rect x="76" y="35" width="56" height="40" rx="10" fill="#0e0c33" stroke="#22d3ee" stroke-width="2"/>
+            <circle cx="166" cy="40" r="4" fill="#22d3ee"/><circle cx="166" cy="70" r="4" fill="#22d3ee"/>
+          </svg>
+          <h3>Cometa (buggy)</h3>
+          <dl class="ficha">
+            <dt>Velocidad</dt><dd>Vehículo estable</dd>
+            <dt>Carácter</dt><dd>Resistente y cómodo para explorar</dd>
+          </dl>
+        </article>
+        <article class="panel vehiculo">
+          <svg viewBox="0 0 200 110" role="img" aria-label="Dibujo visto desde arriba de la Moto Ion">
+            <path d="M22 55l-14 -8v16z" fill="#4f8cff"/>
+            <rect x="26" y="44" width="30" height="22" rx="11" fill="#06051a" stroke="#4b43c9" stroke-width="2"/>
+            <rect x="146" y="44" width="30" height="22" rx="11" fill="#06051a" stroke="#4b43c9" stroke-width="2"/>
+            <rect x="40" y="47" width="120" height="16" rx="8" fill="#2a2680" stroke="#8b5cf6" stroke-width="3"/>
+            <rect x="124" y="30" width="8" height="50" rx="4" fill="#4b43c9"/>
+            <circle cx="96" cy="55" r="13" fill="#0e0c33" stroke="#22d3ee" stroke-width="2"/>
+          </svg>
+          <h3>Moto Ion</h3>
+          <dl class="ficha">
+            <dt>Velocidad</dt><dd>Vehículo rápido</dd>
+            <dt>Carácter</dt><dd>Ágil y ligera</dd>
+          </dl>
+        </article>
+      </div>
+
+      <div class="dos-col">
+        <div class="bloque">
+          <h2>Cómo funcionan</h2>
+          <ul class="lista-puntos">
+            <li>Subes y bajas con <kbd>E</kbd>.</li>
+            <li><strong>Nitro:</strong> permite acelerar durante unos segundos y se recarga automáticamente.</li>
+            <li>Los vehículos pueden recorrer los caminos y las zonas abiertas del mapa.</li>
+          </ul>
+        </div>
+        <div class="bloque">
+          <h2>La Autopista Orbital</h2>
+          <p class="prosa">Una carretera en anillo alrededor del planeta, con rampas de nitro. Ahí aparecen más vehículos. Es la parte del mapa pensada para los amantes de las carreras.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="vista" id="juego-diferencias" data-area="juego" aria-labelledby="t-juego-diferencias">
+      <header class="vista-cab">
+        <p class="migas">Galavia, el juego</p>
+        <h1 id="t-juego-diferencias" tabindex="-1">Lo que nos hace diferentes</h1>
+        <p class="intro">Siete cosas que Galavia quiere hacer mejor.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre el juego"></nav>
+
+      <ul class="dif">
+        <li><strong>Vehículos con nitro y la Autopista Orbital</strong><span>Exploración y carreras en el mismo juego.</span></li>
+        <li><strong>Héroes con habilidades propias</strong><span>Cuatro héroes que cambian la forma de jugar.</span></li>
+        <li><strong>Eventos cósmicos</strong><span>Cápsulas Estelares y lluvia de meteoritos que cambian cada partida.</span></li>
+        <li><strong>Partidas justas</strong><span>Todo se consigue en el mapa, sin pagar para ganar.</span></li>
+        <li><strong>Amigos en segundos</strong><span>Una sala con código, sin registro.</span></li>
+        <li><strong>Ligero</strong><span>Se juega desde el navegador en cualquier móvil o PC, y se instala como app.</span></li>
+        <li><strong>Inmersión</strong><span>Sonido y efectos que reaccionan a lo que pasa en la partida y a los eventos cósmicos.</span></li>
+      </ul>
+    </section>
+
+    <section class="vista" id="juego-controles" data-area="juego" aria-labelledby="t-juego-controles">
+      <header class="vista-cab">
+        <p class="migas">Galavia, el juego</p>
+        <h1 id="t-juego-controles" tabindex="-1">Controles</h1>
+        <p class="intro">Con teclado y ratón en el ordenador, y con dos joysticks en el móvil.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre el juego"></nav>
+
+      <div class="bloque">
+        <h2>En el ordenador</h2>
+        <div class="tabla-caja teclas">
+          <table>
+            <thead><tr><th>Tecla</th><th>Qué hace</th></tr></thead>
+            <tbody>
+              <tr><td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></td><td>Moverte</td></tr>
+              <tr><td>Ratón</td><td>Mirar alrededor</td></tr>
+              <tr><td><kbd>E</kbd></td><td>Recoger objetos o subir al vehículo</td></tr>
+              <tr><td><kbd>Q</kbd></td><td>Usar la habilidad del héroe</td></tr>
+              <tr><td><kbd>3</kbd> <kbd>4</kbd> <kbd>5</kbd></td><td>Usar objetos de recuperación</td></tr>
+              <tr><td><kbd>Shift</kbd></td><td>Nitro</td></tr>
+              <tr><td><kbd>Espacio</kbd></td><td>Saltar de la nave</td></tr>
+              <tr><td><kbd>M</kbd></td><td>Mapa grande</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <h2>En el móvil</h2>
+        <p class="prosa">El joystick de la izquierda sirve para moverte y el de la derecha para orientar la vista. Además hay botones para recoger objetos, usar la habilidad, recuperarte, saltar de la nave y activar el nitro.</p>
+      </div>
+    </section>
+
+    <!-- ===================== JUGAR Y DESCARGAR ===================== -->
+    <section class="vista" id="jugar-en-la-web" data-area="jugar" aria-labelledby="t-jugar-en-la-web">
+      <header class="vista-cab">
+        <p class="migas">Jugar y descargar</p>
+        <h1 id="t-jugar-en-la-web" tabindex="-1">Jugar en la web</h1>
+        <p class="intro">Galavia se juega directamente desde el navegador, sin instalar nada.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre jugar y descargar"></nav>
+
+      <div class="jugar-panel">
+        <p class="estado-chip"><span class="punto"></span> Estado: <strong data-estado-texto>Próximamente</strong></p>
+        <a class="boton" data-enlace="jugar" aria-disabled="true"><span>Jugar en la web</span><span class="estado">Próximamente</span></a>
+        <ul class="lista-puntos">
+          <li>Funciona en ordenador y en móvil.</li>
+          <li>No necesitas cuenta ni registro.</li>
+          <li>Puedes instalarlo como app desde el navegador.</li>
+        </ul>
+      </div>
+
+      <p class="prosa">¿Quieres jugar con tus amigos? Mira <a class="enlace" href="#jugar-con-amigos">cómo se hace</a>.</p>
+    </section>
+
+    <section class="vista" id="jugar-apk" data-area="jugar" aria-labelledby="t-jugar-apk">
+      <header class="vista-cab">
+        <p class="migas">Jugar y descargar</p>
+        <h1 id="t-jugar-apk" tabindex="-1">Descargar el APK</h1>
+        <p class="intro">Para instalar Galavia en un móvil Android.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre jugar y descargar"></nav>
+
+      <div class="jugar-panel">
+        <p class="estado-chip"><span class="punto"></span> Estado: <strong data-estado-texto>Próximamente</strong></p>
+        <a class="boton" data-enlace="apk" aria-disabled="true"><span>Descargar APK</span><span class="estado">Próximamente</span></a>
+      </div>
+
+      <div class="bloque">
+        <h2>Cómo instalarlo en Android</h2>
+        <ol class="pasos">
+          <li><strong>Descarga el archivo APK</strong><span>Con el botón de arriba, cuando esté disponible.</span></li>
+          <li><strong>Ábrelo</strong><span>Android te pedirá permiso para instalar apps de fuera de la tienda. Instala únicamente archivos de una fuente en la que confíes.</span></li>
+          <li><strong>Abre Galavia</strong><span>Aparecerá en tu pantalla de inicio con el logo de la empresa.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="vista" id="jugar-con-amigos" data-area="jugar" aria-labelledby="t-jugar-con-amigos">
+      <header class="vista-cab">
+        <p class="migas">Jugar y descargar</p>
+        <h1 id="t-jugar-con-amigos" tabindex="-1">Jugar con amigos</h1>
+        <p class="intro">En unos segundos, sin cuentas ni registro.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre jugar y descargar"></nav>
+
+      <ol class="pasos">
+        <li><strong>Crea una sala</strong><span>Un jugador crea la sala y recibe un código de 5 letras.</span></li>
+        <li><strong>Comparte el código</strong><span>Se lo pasa a sus amigos, hasta 4 en un mismo equipo.</span></li>
+        <li><strong>Tus amigos entran</strong><span>Escriben el código en el juego y aparecen en la sala.</span></li>
+        <li><strong>Elige el modo y empieza</strong><span>El anfitrión elige Solo o Escuadra y empieza la partida. Los bots rellenan hasta 30 participantes.</span></li>
+      </ol>
+
+      <p class="prosa">Los amigos se conectan directamente entre sí, sin servidor propio de Galavia.</p>
+    </section>
+
+
+        <li><strong>Elige el modo y empieza</strong><span>El anfitrión elige Solo o Escuadra y empieza la partida. Los bots rellenan hasta 30 participantes.</span></li>
+      </ol>
+
+      <p class="prosa">Los amigos se conectan directamente entre sí, sin servidor propio de Galavia.</p>
+    </section>
+
+    <!-- ===================== FUNDADOR ===================== -->
+    <section class="vista" id="fundador-informacion-personal" data-area="fundador" aria-labelledby="t-fundador-informacion-personal">
+      <header class="vista-cab">
+        <p class="migas">Fundador</p>
+        <h1 id="t-fundador-informacion-personal" tabindex="-1">Información personal</h1>
+        <p class="intro">Información del fundador de GALAVIA RD.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre el fundador"></nav>
+
+      <div class="dos-col">
+        <figure class="retrato">
+          <div class="foto-pendiente" role="img" aria-label="Fotografía del fundador no publicada">Fotografía no publicada</div>
+          <figcaption>Fotografía no publicada.</figcaption>
+        </figure>
+        <div class="bloque">
+          <dl class="ficha">
+            <dt>Nombre</dt><dd>Fundador de GALAVIA RD</dd>
+            <dt>Nacimiento</dt><dd>Dato privado</dd>
+            <dt>Vive en</dt><dd>Ubicación no publicada</dd>
+            <dt>Estudios</dt><dd>Estudios de Bachillerato (TIC)</dd>
+            <dt>Cargo</dt><dd>Fundador de GALAVIA RD</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="vista" id="fundador-biografia" data-area="fundador" aria-labelledby="t-fundador-biografia">
+      <header class="vista-cab">
+        <p class="migas">Fundador</p>
+        <h1 id="t-fundador-biografia" tabindex="-1">Biografía</h1>
+        <p class="intro">Un joven emprendedor con ganas de crear videojuegos.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre el fundador"></nav>
+
+      <div class="bloque">
+        <p class="prosa">El fundador es un joven emprendedor con ganas de crear videojuegos y desarrollar GALAVIA RD.</p>
+        <p class="prosa">Le gusta jugar al ping pong, al baloncesto y al béisbol, escuchar música y aprender programación.</p>
+        <p class="prosa">Su objetivo es salir adelante creando un videojuego propio. Ese videojuego es Galavia.</p>
+        <p><a class="enlace" href="#empresa-idea">Leer de dónde nace la idea</a></p>
+      </div>
+    </section>
+
+    <section class="vista" id="fundador-aficiones" data-area="fundador" aria-labelledby="t-fundador-aficiones">
+      <header class="vista-cab">
+        <p class="migas">Fundador</p>
+        <h1 id="t-fundador-aficiones" tabindex="-1">Aficiones</h1>
+        <p class="intro">Lo que le gusta al fundador cuando no está creando Galavia.</p>
+      </header>
+      <nav class="subnav" data-subnav aria-label="Más sobre el fundador"></nav>
+
+      <div class="paneles">
+        <article class="panel afic">
+          <figure><img src="img/baloncesto.jpg" alt="Balón de baloncesto entrando en el aro" width="722" height="423"></figure>
+          <h3>Baloncesto</h3>
+          <p>Le encanta el baloncesto: el ritmo del juego, la velocidad y la emoción de cada canasta.</p>
+        </article>
+        <article class="panel afic">
+          <figure><img src="img/beisbol.jpg" alt="Dos bates de béisbol cruzados y una pelota" width="554" height="554"></figure>
+          <h3>Béisbol</h3>
+          <p>Otro de sus deportes favoritos: cada bateo y cada jugada piden concentración y estrategia.</p>
+        </article>
+        <article class="panel afic">
+          <figure><img src="img/pingpong.jpg" alt="Dos palas de ping pong, una roja y otra azul, y una pelota blanca" width="314" height="314"></figure>
+          <h3>Ping pong</h3>
+          <p>Jugar al ping pong entrena los reflejos y la precisión: un punto se decide en una fracción de segundo.</p>
+        </article>
+        <article class="panel afic">
+          <div class="foto-pendiente" role="img" aria-label="Foto pendiente de Música">Foto pendiente</div>
+          <h3>Música</h3>
+          <p>Le gusta escuchar música en su tiempo libre.</p>
+        </article>
+        <article class="panel afic">
+          <div class="foto-pendiente" role="img" aria-label="Foto pendiente de Programación">Foto pendiente</div>
+          <h3>Programación</h3>
+          <p>Le encanta programar. Es la base para crear sus propios videojuegos y hacer realidad las ideas de GALAVIA RD.</p>
+        </article>
+        <article class="panel afic">
+          <div class="foto-pendiente" role="img" aria-label="Foto pendiente de Videojuegos">Foto pendiente</div>
+          <h3>Videojuegos</h3>
+          <p>Es aficionado a los juegos de carreras y supervivencia. De esa pasión nace Galavia.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACTO ===================== -->
+    <section class="vista" id="contacto" data-area="" aria-labelledby="t-contacto">
+      <header class="vista-cab">
+        <p class="migas">Contacto</p>
+        <h1 id="t-contacto" tabindex="-1">Contacto</h1>
+        <p class="intro">Escríbenos si quieres hablar de videojuegos, de colaboraciones o de Galavia.</p>
+      </header>
+
+      <div class="dos-col">
+        <div class="bloque">
+          <h2>Por correo</h2>
+          <div class="correo-linea">
+            <span class="correo" id="correo-texto" data-correo>galaviard@gmail.com</span>
+            <button class="boton-mini" type="button" data-copiar="#correo-texto">Copiar</button>
+          </div>
+          <p class="prosa">También puedes rellenar el formulario. Al enviarlo se prepara un correo con tu mensaje, listo para mandar desde tu programa de correo.</p>
+        </div>
+        <form class="formulario panel" id="formulario">
+          <div>
+            <label for="nombre">Tu nombre</label>
+            <input id="nombre" name="nombre" type="text" autocomplete="name" placeholder="Cómo te llamas" required>
+          </div>
+          <div>
+            <label for="email">Tu email</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="nombre@correo.com" required>
+          </div>
+          <div>
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" placeholder="Escribe aquí tu mensaje" required></textarea>
+          </div>
+          <div class="botones">
+            <button class="boton" type="submit">Preparar correo</button>
+            <button class="boton secundario" type="reset">Borrar</button>
+          </div>
+          <p class="aviso-form" id="aviso-form" role="status" hidden></p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <p>© 2026 GALAVIA RD. Todos los derechos reservados.</p>
+    <p>El camino hacia un universo de posibilidades.</p>
+  </footer>
+</div>
+
+<!-- ===================== MENÚ (se abre con el logo) ===================== -->
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menú principal">
+  <div class="menu-fondo"></div>
+  <nav class="menu-panel" aria-label="Áreas de la empresa">
+    <div class="menu-cab">
+      <a class="menu-logo" href="#inicio"><img src="img/logo.svg" alt="" width="48" height="48"><span>GALAVIA <b>RD</b></span></a>
+      <button class="menu-cerrar" type="button">Cerrar</button>
+    </div>
+    <p class="menu-lema">El camino hacia un universo de posibilidades.</p>
+
+    <ul class="areas">
+      <li><a class="menu-item" href="#inicio">Inicio</a></li>
+
+      <li class="area" data-area="empresa">
+        <button class="area-boton" type="button" aria-expanded="false" aria-controls="sub-empresa"><span>Empresa<span class="area-nota">Fundación y origen de la idea</span></span></button>
+        <ul class="subs" id="sub-empresa">
+          <li><a href="#empresa-quienes-somos">Quiénes somos</a></li>
+          <li><a href="#empresa-fundacion">Fundación</a></li>
+          <li><a href="#empresa-idea">De dónde nace la idea</a></li>
+          <li><a href="#empresa-mision">Misión y objetivos</a></li>
+        </ul>
+      </li>
+
+      <li class="area" data-area="juego">
+        <button class="area-boton" type="button" aria-expanded="false" aria-controls="sub-juego"><span>Galavia, el juego<span class="area-nota">Todo sobre el videojuego</span></span></button>
+        <ul class="subs" id="sub-juego">
+          <li><a href="#juego-que-es">Qué es Galavia</a></li>
+          <li><a href="#juego-modos">Modos de juego</a></li>
+          <li><a href="#juego-partida">Cómo es una partida</a></li>
+          <li><a href="#juego-heroes">Héroes</a></li>
+          <li><a href="#juego-armas">Equipo y objetos</a></li>
+          <li><a href="#juego-mapa">Mapa</a></li>
+          <li><a href="#juego-vehiculos">Vehículos y Autopista Orbital</a></li>
+          <li><a href="#juego-diferencias">Lo que nos hace diferentes</a></li>
+          <li><a href="#juego-controles">Controles</a></li>
+        </ul>
+      </li>
+
+      <li class="area" data-area="jugar">
+        <button class="area-boton" type="button" aria-expanded="false" aria-controls="sub-jugar"><span>Jugar y descargar<span class="area-nota">En la web y en Android</span></span></button>
+        <ul class="subs" id="sub-jugar">
+          <li><a href="#jugar-en-la-web">Jugar en la web</a></li>
+          <li><a href="#jugar-apk">Descargar el APK</a></li>
+          <li><a href="#jugar-con-amigos">Jugar con amigos</a></li>
+        </ul>
+      </li>
+
+      <li class="area" data-area="fundador">
+        <button class="area-boton" type="button" aria-expanded="false" aria-controls="sub-fundador"><span>Fundador<span class="area-nota">Fundador de GALAVIA RD</span></span></button>
+        <ul class="subs" id="sub-fundador">
+          <li><a href="#fundador-informacion-personal">Información personal</a></li>
+          <li><a href="#fundador-biografia">Biografía</a></li>
+          <li><a href="#fundador-aficiones">Aficiones</a></li>
+        </ul>
+      </li>
+
+      <li><a class="menu-item" href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+</div>
+
+
+  <script>
+    
+/* ==========================================================
+   GALAVIA RD · JavaScript para JSFiddle
+   Configuración + navegación + menú + contacto
+   ========================================================== */
+
+document.documentElement.classList.add("js");
+
+(function () {
+  "use strict";
+
+  /* ----------------------------------------------------------
+     1. CONFIGURACIÓN
+     Cambia estos datos cuando tengas los enlaces definitivos.
+     ---------------------------------------------------------- */
+
+  var GALAVIA_CONFIG = {
+    urlJugar: "",
+    urlApk: "",
+    correo: "galaviard@gmail.com",
+
+    capturas: [
+      // Ejemplo:
+      // { src: "URL_DE_IMAGEN", texto: "Captura del juego" }
+    ]
+  };
+
+  var cfg = GALAVIA_CONFIG;
+  var TITULO = "GALAVIA RD Estudio";
+
+  /* ----------------------------------------------------------
+     2. ELEMENTOS PRINCIPALES
+     ---------------------------------------------------------- */
+
+  var app = document.getElementById("app");
+  var main = document.getElementById("contenido") || document.querySelector("main");
+  var menu = document.getElementById("menu");
+
+  var botonMenu =
+    document.getElementById("menu-boton") ||
+    document.querySelector(".menu-boton");
+
+  var vistas = Array.prototype.slice.call(
+    document.querySelectorAll(".vista")
+  );
+
+  var reducirMovimiento =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function todos(selector, raiz) {
+    return Array.prototype.slice.call(
+      (raiz || document).querySelectorAll(selector)
+    );
+  }
+
+  /* ----------------------------------------------------------
+     3. NAVEGACIÓN ENTRE APARTADOS
+     ---------------------------------------------------------- */
+
+  var enlacesOrden = menu
+    ? todos(".menu-item, .subs a", menu)
+    : [];
+
+  function vistaPorId(id) {
+    for (var i = 0; i < vistas.length; i++) {
+      if (vistas[i].id === id) {
+        return vistas[i];
+      }
+    }
+    return null;
+  }
+
+  function idDelHash() {
+    var id = "";
+
+    try {
+      id = decodeURIComponent(location.hash.replace(/^#/, ""));
+    } catch (e) {
+      id = "";
+    }
+
+    return vistaPorId(id) ? id : "inicio";
+  }
+
+  /* Crear enlaces de subapartados automáticamente */
+
+  function prepararSubnav(vista) {
+    var cont = vista.querySelector("[data-subnav]");
+
+    if (!cont) return;
+
+    var area = vista.getAttribute("data-area");
+
+    var lista = area && menu
+      ? menu.querySelector(
+          '.area[data-area="' + area + '"] .subs'
+        )
+      : null;
+
+    cont.innerHTML = "";
+
+    if (!lista) {
+      cont.hidden = true;
+      return;
+    }
+
+    cont.hidden = false;
+
+    todos("a", lista).forEach(function (a) {
+      var copia = document.createElement("a");
+
+      copia.href = a.getAttribute("href");
+      copia.textContent = a.textContent;
+
+      if (copia.getAttribute("href") === "#" + vista.id) {
+        copia.setAttribute("aria-current", "page");
+      }
+
+      cont.appendChild(copia);
+    });
+  }
+
+  /* Crear navegación anterior y siguiente */
+
+  function prepararPager(vista) {
+    var pos = -1;
+
+    enlacesOrden.forEach(function (a, i) {
+      if (a.getAttribute("href") === "#" + vista.id) {
+        pos = i;
+      }
+    });
+
+    var viejo = vista.querySelector(".pager");
+
+    if (viejo) viejo.remove();
+    if (pos < 0) return;
+
+    var nav = document.createElement("nav");
+
+    nav.className = "pager";
+    nav.setAttribute("aria-label", "Seguir leyendo");
+
+    function crearEnlace(a, clase, rotulo) {
+      var enlace = document.createElement("a");
+
+      enlace.href = a.getAttribute("href");
+
+      if (clase) enlace.className = clase;
+
+      var pequeno = document.createElement("small");
+      pequeno.textContent = rotulo;
+
+      var texto = document.createElement("span");
+      texto.textContent = a.textContent.replace(/\s+/g, " ").trim();
+
+      enlace.appendChild(pequeno);
+      enlace.appendChild(texto);
+
+      return enlace;
+    }
+
+    if (pos > 0) {
+      nav.appendChild(
+        crearEnlace(enlacesOrden[pos - 1], "ant", "ANTERIOR")
+      );
+    }
+
+    if (pos < enlacesOrden.length - 1) {
+      nav.appendChild(
+        crearEnlace(enlacesOrden[pos + 1], "sig", "SIGUIENTE")
+      );
+    }
+
+    vista.appendChild(nav);
+  }
+
+  /* Mostrar una vista */
+
+  function mostrar(id, inicial) {
+    var vista = vistaPorId(id) || vistaPorId("inicio");
+
+    if (!vista) return;
+
+    vistas.forEach(function (v) {
+      var activa = v === vista;
+
+      v.classList.toggle("activa", activa);
+      v.setAttribute("aria-hidden", activa ? "false" : "true");
+    });
+
+    prepararSubnav(vista);
+    prepararPager(vista);
+
+    if (menu) {
+      todos("a[aria-current]", menu).forEach(function (a) {
+        a.removeAttribute("aria-current");
+      });
+
+      todos(".area", menu).forEach(function (li) {
+        li.classList.remove("actual");
+      });
+
+      var enlace = todos("a", menu).find(function (a) {
+        return a.getAttribute("href") === "#" + vista.id;
+      });
+
+      if (enlace) {
+        enlace.setAttribute("aria-current", "page");
+
+        var area = enlace.closest(".area");
+
+        if (area) {
+          area.classList.add("actual");
+          abrirArea(area, true);
+        }
+      }
+    }
+
+    var h1 = vista.querySelector("h1");
+
+    var nombre = h1
+      ? h1.textContent.replace(/\s+/g, " ").trim()
+      : "";
+
+    document.title =
+      vista.id === "inicio" || !nombre
+        ? TITULO
+        : nombre + " · " + TITULO;
+
+    window.scrollTo(0, 0);
+
+    if (!inicial && h1) {
+      h1.focus({ preventScroll: true });
+    }
+  }
+
+  window.addEventListener("hashchange", function () {
+    mostrar(idDelHash(), false);
+  });
+
+  /* ----------------------------------------------------------
+     4. MENÚ PRINCIPAL
+     ---------------------------------------------------------- */
+
+  function abrirArea(li, abrir) {
+    var boton = li.querySelector(".area-boton");
+    var subs = li.querySelector(".subs");
+
+    if (!boton || !subs) return;
+
+    boton.setAttribute("aria-expanded", abrir ? "true" : "false");
+    subs.hidden = !abrir;
+  }
+
+  if (menu) {
+    todos(".area", menu).forEach(function (li) {
+      abrirArea(li, false);
+
+      var boton = li.querySelector(".area-boton");
+
+      if (!boton) return;
+
+      boton.addEventListener("click", function () {
+        var abierto =
+          boton.getAttribute("aria-expanded") === "true";
+
+        abrirArea(li, !abierto);
+      });
+    });
+  }
+
+  function enfocables() {
+    if (!menu) return [];
+
+    return todos("a[href], button", menu).filter(function (el) {
+      return el.offsetParent !== null && !el.disabled;
+    });
+  }
+
+  function abrirMenu() {
+    if (!menu) return;
+
+    menu.classList.add("abierto");
+    document.body.classList.add("menu-abierto");
+
+    if (botonMenu) {
+      botonMenu.setAttribute("aria-expanded", "true");
+    }
+
+    if (app && "inert" in app) {
+      app.inert = true;
+    }
+
+    var actual = menu.querySelector('a[aria-current="page"]');
+
+    var destino =
+      actual && actual.offsetParent !== null
+        ? actual
+        : menu.querySelector(".menu-cerrar");
+
+    if (destino) {
+      window.setTimeout(function () {
+        destino.focus();
+      }, 30);
+    }
+  }
+
+  function cerrarMenu(devolverFoco) {
+    if (!menu) return;
+
+    menu.classList.remove("abierto");
+    document.body.classList.remove("menu-abierto");
+
+    if (botonMenu) {
+      botonMenu.setAttribute("aria-expanded", "false");
+    }
+
+    if (app && "inert" in app) {
+      app.inert = false;
+    }
+
+    if (devolverFoco && botonMenu) {
+      botonMenu.focus();
+    }
+  }
+
+  if (botonMenu && menu) {
+    botonMenu.addEventListener("click", function () {
+      if (menu.classList.contains("abierto")) {
+        cerrarMenu(true);
+      } else {
+        abrirMenu();
+      }
+    });
+  }
+
+  if (menu) {
+    var cerrar = menu.querySelector(".menu-cerrar");
+    var fondo = menu.querySelector(".menu-fondo");
+
+    if (cerrar) {
+      cerrar.addEventListener("click", function () {
+        cerrarMenu(true);
+      });
+    }
+
+    if (fondo) {
+      fondo.addEventListener("click", function () {
+        cerrarMenu(true);
+      });
+    }
+
+    menu.addEventListener("click", function (e) {
+      var enlace = e.target.closest("a[href^='#']");
+
+      if (!enlace) return;
+
+      var mismo =
+        enlace.getAttribute("href") === "#" + idDelHash();
+
+      cerrarMenu(false);
+
+      if (mismo) {
+        var vista = vistaPorId(idDelHash());
+        var h1 = vista && vista.querySelector("h1");
+
+        if (h1) h1.focus({ preventScroll: true });
+
+        window.scrollTo(0, 0);
+      }
+    });
+  }
+
+  /* Cerrar menú con Escape y controlar el foco */
+
+  document.addEventListener("keydown", function (e) {
+    if (!menu || !menu.classList.contains("abierto")) return;
+
+    if (e.key === "Escape") {
+      e.preventDefault();
+      cerrarMenu(true);
+      return;
+    }
+
+    if (e.key !== "Tab") return;
+
+    var lista = enfocables();
+
+    if (!lista.length) return;
+
+    var primero = lista[0];
+    var ultimo = lista[lista.length - 1];
+
+    if (e.shiftKey && document.activeElement === primero) {
+      e.preventDefault();
+      ultimo.focus();
+    } else if (
+      !e.shiftKey &&
+      document.activeElement === ultimo
+    ) {
+      e.preventDefault();
+      primero.focus();
+    } else if (!menu.contains(document.activeElement)) {
+      e.preventDefault();
+      primero.focus();
+    }
+  });
+
+  /* Botón para saltar al contenido */
+
+  var saltar = document.querySelector(".saltar");
+
+  if (saltar && main) {
+    saltar.addEventListener("click", function () {
+      main.focus();
+    });
+  }
+
+  /* ----------------------------------------------------------
+     5. BOTONES PARA JUGAR Y DESCARGAR
+     ---------------------------------------------------------- */
+
+  var hayJuego = !!(cfg.urlJugar || cfg.urlApk);
+
+  todos("[data-enlace]").forEach(function (a) {
+    var tipo = a.getAttribute("data-enlace");
+
+    var url =
+      tipo === "jugar"
+        ? cfg.urlJugar
+        : cfg.urlApk;
+
+    var estado = a.querySelector(".estado");
+
+    if (url) {
+      a.href = url;
+      a.target = "_blank";
+      a.rel = "noopener";
+
+      a.removeAttribute("aria-disabled");
+
+      if (estado) {
+        estado.textContent =
+          tipo === "jugar"
+            ? "Se abre en otra pestaña"
+            : "Descarga directa";
+      }
+    } else {
+      a.removeAttribute("href");
+      a.setAttribute("aria-disabled", "true");
+
+      if (estado) {
+        estado.textContent = "Próximamente";
+      }
+    }
+  });
+
+  todos("[data-estado-texto]").forEach(function (el) {
+    el.textContent = hayJuego ? "Disponible" : "Próximamente";
+  });
+
+  todos(".estado-chip").forEach(function (el) {
+    el.classList.toggle("listo", hayJuego);
+  });
+
+  /* ----------------------------------------------------------
+     6. GALERÍA DE CAPTURAS
+     ---------------------------------------------------------- */
+
+  var bloqueGaleria = document.getElementById("galeria-bloque");
+  var galeria = document.getElementById("galeria");
+
+  if (bloqueGaleria && galeria) {
+    var capturas = Array.isArray(cfg.capturas)
+      ? cfg.capturas
+      : [];
+
+    capturas.forEach(function (captura) {
+      if (!captura || !captura.src) return;
+
+      var figura = document.createElement("figure");
+      var img = document.createElement("img");
+
+      img.src = captura.src;
+      img.alt = captura.texto || "Captura de Galavia";
+      img.loading = "lazy";
+
+      figura.appendChild(img);
+
+      if (captura.texto) {
+        var pie = document.createElement("figcaption");
+
+        pie.textContent = captura.texto;
+        figura.appendChild(pie);
+      }
+
+      galeria.appendChild(figura);
+    });
+
+    bloqueGaleria.hidden = galeria.children.length === 0;
+  }
+
+  /* ----------------------------------------------------------
+     7. CORREO Y BOTÓN COPIAR
+     ---------------------------------------------------------- */
+
+  var correo = cfg.correo || "galaviard@gmail.com";
+
+  todos("[data-correo]").forEach(function (el) {
+    el.textContent = correo;
+  });
+
+  todos("[data-copiar]").forEach(function (boton) {
+    var original = boton.textContent;
+
+    function aviso(texto) {
+      boton.textContent = texto;
+
+      window.setTimeout(function () {
+        boton.textContent = original;
+      }, 2000);
+    }
+
+    boton.addEventListener("click", function () {
+      var objetivo = document.querySelector(
+        boton.getAttribute("data-copiar")
+      );
+
+      var texto = objetivo
+        ? objetivo.textContent
+        : correo;
+
+      function seleccionar() {
+        if (objetivo && window.getSelection) {
+          var rango = document.createRange();
+
+          rango.selectNodeContents(objetivo);
+
+          var seleccion = window.getSelection();
+
+          seleccion.removeAllRanges();
+          seleccion.addRange(rango);
+        }
+
+        aviso("Selecciónalo y copia");
+      }
+
+      if (
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+      ) {
+        navigator.clipboard.writeText(texto).then(
+          function () {
+            aviso("Copiado");
+          },
+          seleccionar
+        );
+      } else {
+        seleccionar();
+      }
+    });
+  });
+
+  /* ----------------------------------------------------------
+     8. FORMULARIO DE CONTACTO
+     ---------------------------------------------------------- */
+
+  var formulario = document.getElementById("formulario");
+  var avisoForm = document.getElementById("aviso-form");
+
+  if (formulario && avisoForm) {
+    formulario.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      var nombre = formulario.elements.nombre.value.trim();
+      var email = formulario.elements.email.value.trim();
+      var mensaje = formulario.elements.mensaje.value.trim();
+
+      if (!nombre || !email || !mensaje) {
+        avisoForm.textContent =
+          "Completa todos los campos antes de continuar.";
+
+        avisoForm.hidden = false;
+        return;
+      }
+
+      var asunto = "Mensaje desde la web de GALAVIA RD";
+
+      var cuerpo =
+        mensaje +
+        "\n\n" +
+        nombre +
+        "\n" +
+        email;
+
+      var enlace =
+        "mailto:" +
+        correo +
+        "?subject=" +
+        encodeURIComponent(asunto) +
+        "&body=" +
+        encodeURIComponent(cuerpo);
+
+      avisoForm.textContent =
+        "Si se ha abierto tu programa de correo, revisa el mensaje y envíalo. Si no, escribe directamente a " +
+        correo +
+        ".";
+
+      avisoForm.hidden = false;
+
+      window.location.href = enlace;
+    });
+
+    formulario.addEventListener("reset", function () {
+      avisoForm.hidden = true;
+    });
+  }
+
+  /* ----------------------------------------------------------
+     9. ACCESIBILIDAD Y MOVIMIENTO REDUCIDO
+     ---------------------------------------------------------- */
+
+  if (reducirMovimiento) {
+    todos("animateMotion").forEach(function (n) {
+      if (n.parentNode) {
+        n.parentNode.removeChild(n);
+      }
+    });
+  }
+
+  /* ----------------------------------------------------------
+     10. INICIO DE LA PÁGINA
+     ---------------------------------------------------------- */
+
+  mostrar(idDelHash(), true);
+
+})();
+
+  </script>
 </body>
 </html>
